@@ -36,14 +36,19 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+l = length(theta);
+h = sigmoid(X * theta);
 
+% Calcurate cost without regulation as first.
+J = 1/m * (-y' * log(h) - (1 - y)' * log(1 - h )); 
+% Add regulation term for theta_j (j > 2)
+J = J + sum(lambda / (2 * m) * theta(2:l).^2);
 
-
-
-
-
-
-
+% Calcurate gradient without regulation as first.
+grad = 1/m * (h - y)' * X; % Current size of grad is 1 x 28
+grad = grad'; % Identify grad size to theta (28 x 1)
+% Add regulation term for theta_j (j > 2)
+grad(2:l) = grad(2:l) + lambda / m * theta(2:l);
 
 % =============================================================
 
