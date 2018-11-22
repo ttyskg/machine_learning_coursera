@@ -21,13 +21,16 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
-
-
-
-
-
-
-
+% Add bias unit.
+X = [ones(m, 1) X];
+% Layer 1 calculation.
+a1 = arrayfun(@(x) sigmoid(x), (X * Theta1'));
+% Add bias unit to layer 1.
+a1 = [ones(m, 1) a1];
+% Layer 2 calculation.
+a2 = arrayfun(@(x) sigmoid(x), (a1 * Theta2'));
+% Return predicitions.
+[p_val, p] = max(a2, [], 2);
 
 % =========================================================================
 
