@@ -30,11 +30,11 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+% Calculate the probability of each numbers.
+probability = X * all_theta';
+probability = arrayfun(@(x) sigmoid(x), probability);
 
-
-
-
-
+[p_v, p] = max(probability, [], 2);
 
 % =========================================================================
 
