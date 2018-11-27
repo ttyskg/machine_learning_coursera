@@ -62,15 +62,36 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Add bias unit to input layer.
+X = [ones(size(X, 1), 1) X];
+
+% Calculate layer1
+a2 = arrayfun(@(x) sigmoid(x), (Theta1 * X')');
+
+% Add bias unit to layer1
+a2 = [ones(size(a2, 1), 1) a2];
+
+% Calculate layer2
+a3 = arrayfun(@(x) sigmoid(x), (Theta2 * a2')');
 
 
+% Recode y labels to vectors containing only values 0 or 1.
+Y = zeros(size(y), num_labels);
 
+for i = 1:m
+    y_label = y(i);
+    Y(i, y_label) = 1;
+end
 
+% Calcuate cost
+j = 1/m * (-Y * log(a3)' - (1 - Y) * log(1 - a3)');
+% j is a m x m matrix, and the diagonal components are costs of i-th data. 
+% The others components are junk. Therefore, remove these junk components by 
+% multiplying a m x m diagonal matrix.
+j = j .* eye(m);
 
-
-
-
-
+% Calculaate total cost by summing j.
+J = sum(sum(j));
 
 
 
