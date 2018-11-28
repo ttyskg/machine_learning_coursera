@@ -94,9 +94,12 @@ j = j .* eye(m);
 J = sum(sum(j));
 
 
+% Add regulation term to the cost.
+Theta1_noBias = Theta1(:, 2:end);
+Theta2_noBias = Theta2(:, 2:end);
+regulation = lambda / (2 * m) * (sum(sum(Theta1_noBias.^2)) + sum(sum(Theta2_noBias.^2)));
 
-
-
+J = J + regulation;
 
 
 
