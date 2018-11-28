@@ -121,7 +121,7 @@ Theta2_grad = 1/m * Delta2;
 
 % Part 3: Add regulation term to the backpropagation gradients
 Theta1_noBiasNN = [zeros(size(Theta1, 1), 1) Theta1(:, 2:end)];
-Theta2_noBiasNN = [zeros(size(Theta1, 1), 1) Theta2(:, 2:end)];
+Theta2_noBiasNN = [zeros(size(Theta2, 1), 1) Theta2(:, 2:end)];
 
 Theta1_grad = 1/m * Delta1 + lambda / m * Theta1_noBiasNN;
 Theta2_grad = 1/m * Delta2 + lambda / m * Theta2_noBiasNN;
