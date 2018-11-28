@@ -102,7 +102,21 @@ regulation = lambda / (2 * m) * (sum(sum(Theta1_noBias.^2)) + sum(sum(Theta2_noB
 J = J + regulation;
 
 
+% Part 2: Calculate gradient
+z2 = (Theta1 * X')';
+z2 = [ones(size(z2, 1), 1) z2];
 
+delta3 = a3 - Y;
+
+delta2 = (Theta2' * delta3')' .* sigmoidGradient(z2);
+delta2 = delta2(:, 2:end);
+
+Delta2 = delta3' * a2;
+
+Delta1 = delta2' * X;
+
+Theta1_grad = 1/m * Delta1;
+Theta2_grad = 1/m * Delta2;
 
 % -------------------------------------------------------------
 
