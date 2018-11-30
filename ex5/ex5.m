@@ -229,3 +229,54 @@ fprintf('Test Error by using the best lambda is %d\n', error_test);
 fprintf('This value should be 3.8599\n');
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+%% == Part 10: (Optional) Plotting learning Curves with randomly selected examples ==
+%  Now, you will get to experiment with polynomial regression with multiple
+%  values of lambda with randomy selected examples.
+%
+
+lambda = 0.01;
+num_rand = 50;
+m = size(X_poly, 1);
+
+% error values of each randomized examples
+error_train_rands = zeros(m, num_rand);
+error_val_rands = zeros(m, num_rand);
+
+for i = 1:num_rand
+    % Shuffle examples
+    XY = [X_poly y];
+    XY = XY(randperm(size(XY, 1)), :);
+    X_shuf = XY(:, 1:size(X_poly, 2));
+    y_shuf = XY(:, size(X_poly, 2)+1:end);
+
+
+    [error_train_rands(:, i), error_val_rands(:, i)] = ...
+        learningCurve(X_shuf, y_shuf, X_poly_val, yval, lambda);
+end
+
+error_train = mean(error_train_rands, 2);
+error_val = mean(error_val_rands, 2);
+
+% Plot training data and fit
+figure(1);
+[error_train, error_val] = ...
+    learningCurve(X_poly, y, X_poly_val, yval, lambda);
+plot(1:m, error_train, 1:m, error_val);
+
+title(sprintf('Polynomial Regression Learning Curve (lambda = %f)', lambda));
+xlabel('Number of training examples')
+ylabel('Error')
+axis([0 13 0 100])
+legend('Train', 'Cross Validation')
+
+fprintf('Polynomial Regression (lambda = %f)\n\n', lambda);
+fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
+for i = 1:m
+    fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
+end
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
+
+
