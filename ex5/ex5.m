@@ -218,3 +218,14 @@ end
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
+
+%% =========== Part 9: (Optional) Computeing test set error =========
+% Calculate test error by using the best lambda value (=3).
+
+theta = trainLinearReg(X_poly, y, 3);
+error_test = linearRegCostFunction(X_poly_test, ytest, theta, 0);
+
+fprintf('Test Error by using the best lambda is %d\n', error_test);
+fprintf('This value should be 3.8599\n');
+fprintf('Program paused. Press enter to continue.\n');
+pause;
