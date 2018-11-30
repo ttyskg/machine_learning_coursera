@@ -19,16 +19,14 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+% w is a theta matrix which convert the first row to 0 to avoid include bias 
+% term as regulation.
+w = zeros(size(theta));
+w(2:end, :) = theta(2:end, :);
 
+J = 1 / (2 * m) * sum((X * theta - y).^2) + lambda / (2 * m) * sum(w.^2);
 
-
-
-
-
-
-
-
-
+grad = 1 / m * ((X * theta - y)' * X)' + lambda / m * w;
 
 % =========================================================================
 
