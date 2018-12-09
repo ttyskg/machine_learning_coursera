@@ -23,9 +23,28 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+% Prepare candidates of C and sigma.
+C_candidate = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
+sigma_candidate = [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
 
+n = size(C_candidate, 1);
+m = size(sigma_candidate, 1);
+best_error_rate = 1;
 
+for i = 1:n
+    for j = 1:m
+        model = svmTrain(X, y, C_candidate(i), ...
+            @(x1, x2) gaussianKernel(x1, x2, sigma_candidate(j)));
+        predictions = svmPredict(model, Xval);
+        error_rate = mean(double(predictions ~= yval));
 
+        if error_rate < best_error_rate
+            best_error_rate = error_rate;
+            C = C_candidate(i);
+            sigma = sigma_candidate(j);
+        endif
+    endfor
+endfor
 
 
 
