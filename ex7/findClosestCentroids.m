@@ -21,10 +21,14 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+% Prepare a matrix to store distances from each centroids.
+distances = zeros(size(X, 1), K);
 
+for i = 1:K
+    distances(:, i) = sum((X - centroids(i, :)).^2, 2);
+endfor
 
-
-
+[_, idx] = min(distances, [], 2);
 
 
 % =============================================================
