@@ -26,12 +26,13 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+for i = 1:K
+    % Number of samples belonged to Ci
+    Ci = sum(idx == i);
 
-
-
-
-
-
+    % Remove samples which do not belonged to Ci by converting to 0
+    centroids(i, :) = sum(X .* (idx == i)) / Ci;
+end
 
 % =============================================================
 
